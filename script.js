@@ -1,46 +1,65 @@
-var startButton = document.getElementById('start-btn');
-var welcomeIntro = document.getElementById('welcome');
-var container_boxElement = document.getElementById('container-box');
-var nextButton = document.getElementById('next-btn');
-var questionElement = document.getElementById('questions');
-var optionElement = document.querySelectorAll('#option');
+var startButton = document.getElementById("start-btn");
 
-startButton.addEventListener('click', startQuiz);
+var questionEL = document.querySelector("#question");
 
-var arrOfQuestions = [
-    {
-        question:"What is 2 plus 2?",
-    },
-    {
-        question:"What is 30 into 10?",
-       
-    },
-]
+var answersEL = document.querySelector("#container-answers");
 
-var arrOfAnswers = ['2','3','4','5'];
+startButton.addEventListener("click", startQuiz);
+
 //...this function will execute when I click on the Start button...
-function startQuiz(){
-    startButton.classList.add('hide');
-    welcomeIntro.classList.add('hide');
-    container_boxElement.classList.remove('hide');
-    nextButton.classList.remove('hide');
-    nextQuestion()
-   
+
+function startQuiz() {
+  startButton.classList.add("hide");
+
+  document.querySelector("#container-answers").classList.remove("hide");
+
+  showQuestion();
 }
 
-//...when I select an answer I will click on the next button 
-//...this function will execute when clickin on the next button...
-function nextQuestion(){
-    questionElement.innerText = arrOfQuestions[0].question
-    for (var i = 0; i < arrOfAnswers.length; i++){
-        console.log(optionElement[i]);
-        console.log(arrOfAnswers[i]);
-        optionElement[i].innerText = arrOfAnswers[i];
-    }
-    
-}   
+//...This function will display the first question and choices from
+
+// the array of questions.
+
+function showQuestion() {
+  questionEL.innerText = myQuestions[0].question;
+}
+
 //...this will execute when I choose an answer...
-function selectAnswer(){
 
-}
+function selectAnswer() {}
 
+//...Array of questions and answer choices
+
+var myQuestions = [
+  {
+    question: "What does CSS stand for?",
+
+    answers: {
+      a: "Clerical Support StaffS",
+
+      b: "Charles Smith Sonye",
+
+      c: "Cascading Styling Sheets",
+
+      d: "College Scholarship Service",
+    },
+
+    correctAnswer: "c",
+  },
+
+  {
+    question: "JavaScript File Has An Extension Of",
+
+    answers: {
+      a: ".Java",
+
+      b: ".js",
+
+      c: ".javascript",
+
+      d: ".xml",
+    },
+
+    correctAnswer: "b",
+  },
+];
