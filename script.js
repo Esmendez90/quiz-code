@@ -1,8 +1,8 @@
 var startButton = document.getElementById("start-btn");
 
-var questionEL = document.querySelector("#question");
+var nextButton = document.getElementById("next-btn");
 
-var answersEL = document.querySelector("#container-answers");
+var timeEl = document.querySelector(".timer");
 
 startButton.addEventListener("click", startQuiz);
 
@@ -11,55 +11,127 @@ startButton.addEventListener("click", startQuiz);
 function startQuiz() {
   startButton.classList.add("hide");
 
-  document.querySelector("#container-answers").classList.remove("hide");
+  nextButton.classList.remove("hide");
 
-  showQuestion();
+  setTime();
 }
 
-//...This function will display the first question and choices from
+//...Timer code executes after clicking the Start button...
 
-// the array of questions.
+var secondsLeft = 60;
 
-function showQuestion() {
-  questionEL.innerText = myQuestions[0].question;
+function setTime() {
+  var timerInterval = setInterval(function () {
+    secondsLeft--;
+
+    timeEl.textContent = "You have " + secondsLeft + " seconds left";
+
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+
+  showNextQuestion();
 }
 
-//...this will execute when I choose an answer...
+//...Array of question and answer choices
 
-function selectAnswer() {}
-
-//...Array of questions and answer choices
+var questionIndex = 0;
 
 var myQuestions = [
   {
     question: "What does CSS stand for?",
 
-    answers: {
-      a: "Clerical Support StaffS",
+    answerIndex: 2,
 
-      b: "Charles Smith Sonye",
+    choices: [
+      "Clerical Support StaffS",
 
-      c: "Cascading Styling Sheets",
+      "Charles Smith Sonye",
 
-      d: "College Scholarship Service",
-    },
+      "Cascading Styling Sheets",
 
-    correctAnswer: "c",
+      "College Scholarship Service",
+    ],
   },
 
   {
-    question: "JavaScript File Has An Extension Of",
+    question: "JavaScript File Has An Extension Of?",
 
-    answers: {
-      a: ".Java",
+    answerIndex: 1,
 
-      b: ".js",
-
-      c: ".javascript",
-
-      d: ".xml",
-    },
-
-    correctAnswer: "b",
+    choices: [".java", ".js", ".script", ".JAVASCRIPT"],
   },
 ];
+
+var containerTag = document.querySelector("#container");
+
+//var correctAnswer = (myQuestions[questionIndex].answerIndex);
+
+function showNextQuestion() {
+  containerTag.textContent = "";
+
+  // Create h1 element, that is a child of the containerTag, to hold the questions
+
+  var questionTag = document.createElement("h1");
+
+  containerTag.appendChild(questionTag);
+
+  questionTag.textContent = myQuestions[questionIndex].question;
+
+  // Create a list element that is a child of the containerTag
+
+  var choiceListTag = document.createElement("ol");
+
+  containerTag.appendChild(choiceListTag);
+
+  // Creat a loop and li element to hold the choices. li element is a child of choiceListTag.
+
+  for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
+    var choiceTag = document.createElement("li");
+
+    choiceListTag.appendChild(choiceTag);
+
+    choiceTag.textContent = myQuestions[questionIndex].choices[i];
+
+    // If the user clicks on one of the four choices
+
+    // Then the browser will display 'Correct Answer' if the correct choice was clicked on
+
+    // Or 'Wrong Answer' is any of the other choices were clicked on
+
+    // Add 1 to the count of correct answers or wrong answers
+
+    // When the user clicks on the Next button, then the following question will be displayed
+
+    choiceTag.addEventListener("click", function () {
+      clearInterval(questionInterval);
+
+      questionIndex++;
+
+      showNextQuestion();
+    });
+  }
+
+  var questionInterval = setInterval(function () {
+    if (seconds === 0) {
+      //CREATE A VARIABLE FOR SECONDS
+
+      // clear timer
+
+      //timerTag.textContent = " ";
+
+      // stop timer
+
+      clearInterval(questionInterval);
+
+      // call the next function for speed reading
+
+      showNextQuestion();
+    }
+
+    // subtract one second
+
+    seconds--;
+  }, 1000);
+}
