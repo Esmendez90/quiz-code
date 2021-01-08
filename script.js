@@ -1,43 +1,40 @@
 var startButton = document.getElementById("start-btn");
-
 var nextButton = document.getElementById("next-btn");
-
 var timeEl = document.querySelector(".timer");
 
 startButton.addEventListener("click", startQuiz);
 
-//...this function will execute when I click on the Start button...
-
+// WHEN I click the Start button, the startQuiz function will execute.
+// The Start button will hide, and the Next button will show.
+// The timer function will execute and the countdown timer will show on the page.
+// The showNextQuestion function will also execute and a question with four choices
+//  will display on the page.
 function startQuiz() {
   startButton.classList.add("hide");
-
   nextButton.classList.remove("hide");
-
   setTime();
+  showNextQuestion();
 }
 
-//...Timer code executes after clicking the Start button...
+// The timer will start decrementing from a set value of 60
+//  at a speed of 1000 milliseconds.
+// When the seconds equals to zero the timer will stop.
 
-var secondsLeft = 60;
+var seconds = 60;
 
 function setTime() {
   var timerInterval = setInterval(function () {
-    secondsLeft--;
-
-    timeEl.textContent = "You have " + secondsLeft + " seconds left";
-
-    if (secondsLeft === 0) {
+    seconds--;
+    timeEl.textContent = "You have " + seconds + " seconds left";
+    if (seconds === 0) {
       clearInterval(timerInterval);
     }
   }, 1000);
 
-  showNextQuestion();
 }
 
-//...Array of question and answer choices
-
+// The questions and choices will be grabbed from the array of questions
 var questionIndex = 0;
-
 var myQuestions = [
   {
     question: "What does CSS stand for?",
@@ -45,7 +42,7 @@ var myQuestions = [
     answerIndex: 2,
 
     choices: [
-      "Clerical Support StaffS",
+      "Clerical Support Staff",
 
       "Charles Smith Sonye",
 
@@ -64,35 +61,28 @@ var myQuestions = [
   },
 ];
 
+// The containerTag will target an html element with an id of 'container'.
 var containerTag = document.querySelector("#container");
-
-//var correctAnswer = (myQuestions[questionIndex].answerIndex);
 
 function showNextQuestion() {
   containerTag.textContent = "";
 
-  // Create h1 element, that is a child of the containerTag, to hold the questions
-
+  // Create an h1 element that is a child of the containerTag
+  //  and will hold the questions from the array of questions.
   var questionTag = document.createElement("h1");
-
   containerTag.appendChild(questionTag);
-
   questionTag.textContent = myQuestions[questionIndex].question;
 
   // Create a list element that is a child of the containerTag
-
   var choiceListTag = document.createElement("ol");
-
   containerTag.appendChild(choiceListTag);
 
-  // Creat a loop and li element to hold the choices. li element is a child of choiceListTag.
-
+  // Creat a loop and li element to hold the choices, 
+  //  the li element is a child of choiceListTag.
   for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
     var choiceTag = document.createElement("li");
-
     choiceListTag.appendChild(choiceTag);
-
-    choiceTag.textContent = myQuestions[questionIndex].choices[i];
+    choiceTag.textContent = myQuestions[questionIndex].choices;
 
     // If the user clicks on one of the four choices
 
@@ -114,7 +104,7 @@ function showNextQuestion() {
   }
 
   var questionInterval = setInterval(function () {
-    if (seconds === 0) {
+    if (secondsLeft === 0) {
       //CREATE A VARIABLE FOR SECONDS
 
       // clear timer
@@ -132,6 +122,6 @@ function showNextQuestion() {
 
     // subtract one second
 
-    seconds--;
+    secondsLeft--;
   }, 1000);
 }
