@@ -12,15 +12,37 @@
   </head>
 
   <body>
+
+    <div class="container">
     <div class="timer"></div>
+    <div class="correctAnswer"></div>
+    <div class="wrongAnswer"></div>
 
-    <main id="container"></main>
-
-    <div id="container-buttons">
-      <button id="start-btn">Start</button>
-
-      <!-- <button id="next-btn" class="hide">Next</button> -->
+    <main id="quizContainer"></main>
     </div>
+
+    <div class="startBtn-container">
+      <button id="start-btn">Start</button>
+    </div>
+
+    <!-- --------- Renser Last User Container Code -------- -->
+    <div id="lastUser-Container" class="hide">
+      <form id="userInfo">
+        <input typer="text" name="initials" class="initials" placeholder="Type your initials here"></input>
+        <input type="text" name="score" class="score" placeholder="Your score"></input>
+      
+      </form>
+      
+      <div id="lastUser"></div>
+
+      <div class="save-div">
+        <button id="save" placeholder="save">Save</button>
+      </div>
+
+      <div class="lastRegistered"></div>
+    </div>
+
+    
 
     <script src="script.js"></script>
   </body>

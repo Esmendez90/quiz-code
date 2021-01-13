@@ -1,40 +1,59 @@
+// Grabbing elements from html page
+var startButton = document.getElementsById("start-btn");
 var timeEl = document.querySelector(".timer");
-var startButton = document.getElementById("start-btn");
+var correctAnswer = document.querySelector(".correctAnswer");
+var wrongAnswer = document.querySelector(".wrongAnswer");
+var container = document.querySelector(".container");
+
+// Render last user container code
+var lastUserContainer = document.querySelector("#lastUser-Container");
+var userInfo = document.querySelector("#userInfo");
+var initials = document.querySelector(".initials");
+var score = document.querySelector(".score");
+var lastUser = document.querySelector("#lastUser");
+var saveDiv = document.querySelectord(".save-div");
+var saveBtn = document.querySelector("#save");
+var lastRegistered = document.querySelector(".lastRegistered");
+
+// Variables
+var seconds = 60;
+var questionIndex = 0;
+var correct = 0;
+var wrong = 0;
 
 startButton.addEventListener("click", startQuiz);
 
-// WHEN I click the Start button, the startQuiz function will execute.
-// The Start button will hide, and the Next button will show.
+// WHEN I click the Start button, the startQuiz function will execute,
+// The Start button will hide.
 // The timer function will execute and the countdown timer will show on the page.
 // The showNextQuestion function will also execute and a question with four choices
-//  will display on the page.
+// will display on the page.
 function startQuiz() {
   startButton.classList.add("hide");
   setTime();
-  showQuestion();
+  showNextQuestion();
 }
 
 // The timer will start decrementing from a set value of 60
-//  at a speed of 1 second (1000 ms.).
+// at a speed of 1 second (1000 ms.).
 // When the seconds equals to zero the timer will stop.
-// The quiz will also stop and the scoreboard should be displayed.
+// The timer, question, and four choices will hide.
+// The renderLastUser function will execute.
 var seconds = 60;
 function setTime() {
   var timerInterval = setInterval(function () {
     seconds--;
-    timeEl.textContent =
-      "You have " + seconds + " seconds to complete the quiz!";
-    if (seconds === 0) {
+    timeEl.textContent = seconds + " seconds left";
+    if (seconds === -1) {
       clearInterval(timerInterval);
-      // Have to creat a scoreboard function that will execute when the timer is equal to zero,
-      //  or the user has completed answering all the questions.
-      scoreboard();
+      container.classList.add("hide");
+      lastUserContainer.classList.remove("hide");
+      renderLastUser();
     }
   }, 1000);
 }
 
 // The questions and choices will be grabbed from the array of questions
-var questionIndex = 0;
 var myQuestions = [
   {
     question: "What does CSS stand for?",
@@ -54,62 +73,77 @@ var myQuestions = [
 ];
 
 // The containerTag will target an html element with an id of 'container'.
-var containerTag = document.querySelector("#container");
+var quizContainer = document.querySelector("#quizContainer");
 
 function showQuestion() {
-  containerTag.textContent = "";
+  quizContainer.textContent = "";
 
   // Create an h1 element that is a child of the containerTag
   // and will hold the questions from the array of questions.
   var questionTag = document.createElement("h1");
-  containerTag.appendChild(questionTag);
+  quizContainer.appendChild(questionTag);
   questionTag.textContent = myQuestions[questionIndex].question;
+  
+  // Create a ul element that is a child of quizContainer
+  var choiceListTag = document.createElement("ul");
+  quizContainer.appendChild(choiceListTag);
 
-  // Creat a loop and li element to hold the choices,
+  // Create a loop and li element to hold each of the choices,
   // the li element is a child of choiceListTag.
   for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
-    //console.log(myQuestions[questionIndex].choices[i]);
-    var choiceTag = document.createElement("button");
-    containerTag.appendChild(choiceTag);
-    choiceTag.textContent = myQuestions[questionIndex].choices[i];
+    var choiceTag = document.createElement("li");
+    choiceListTag.appendChild(choiceTag);
 
-    choiceTag.setAttribute("data-index", i);
-    var index = parseInt(choiceTag.getAttribute("data-index", i));
-    console.log(index);
+    var button = document.createElement("button");
+    choiceTag.appendChild(button);
+    choiceTag.style.width = "fit-content";
+    button.textContent = myQuestions[questionIndex].choices[i]
+
+    button.setAttribute("data-index", i);
+    var index = parseInt(button.getAttribute("data-index"));
+
+    // IF the use clicks on one of the four choices
+    // then the browser will display "Correct" if the correct choice is clicked on
+    // Or "Wrong" if any of the other choices are clicked on.
+    // Add 1 to the count of correct or wrong variables.
+    if(index === myQuestions[questionIndex].answerIndex){
+      choiceListTag.addEventListener("click", function(event){
+        alert("Wrong Choice");
+        event.stopPropagation();
+        wrong++
+        wrongAnswer.textContent = "Wrong answers = " + wrong;
+        questionIndex++
+        showNextQuestion();
+      });
+
+      button.addEventListener("click", function(event){
+        alert("Correct Choice");
+        event.stopPropagation();
+        correct++
+        correctAnswer.textContent = "Correct answers = " + correct;
+        questionIndex++
+        showNextQuestion();
+      });
+    }
   }
 }
 
-
-
-// IF the user clicks on one of the four choices
-// then the browser will display 'Correct Answer' if the correct choice was clicked on
-// or 'Wrong Answer' is any of the other choices were clicked on
-// add 1 to the count of correct answers or wrong answers
-// then the following question will be displayed.
-
-function scoreboard() {
-  alert("scoredboard will be displayed");
+// WHEN the seconds is equal to zero, the renderLastUser function will execute.
+// The user will enter their initials and click Save.
+function displayMessage(type, message){
+  saveDiv.textContent = message;
+  saveDiv.setAttribute("class", type);
 }
 
-//  --------------this shall be used later ------------------
-//   choiceTag.addEventListener("click", function () {
-//     clearInterval(questionInterval);
-//     questionIndex++;
-//     showNextQuestion();
-//   });
-// }
+function renderLastUser(){
+  var userInitials = localStorage.getItem("userInitials");
+  //need to do one for the score
 
-// var questionInterval = setInterval(function () {
-//   if (secondsLeft === 0) {
-//     //CREATE A VARIABLE FOR SECONDS
-//     // clear timer
-//     //timerTag.textContent = " ";
-//     // stop timer
-//     clearInterval(questionInterval);
-//     // call the next function for speed reading
-//     showNextQuestion();
-//   }
-//     // subtract one second
-//     secondsLeft--;
-// }, 1000);
-// //-----------------------------------------------------------
+  if(!userInitials){
+    return "";
+  }
+
+  var lastUserEl = document.createElement("h2");
+  lastRegistered.appendChild(lastUserEl);
+  
+}
