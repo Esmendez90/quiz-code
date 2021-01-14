@@ -7,16 +7,17 @@ var container = document.querySelector(".container");
 
 // Grab elements for renderring last user (localStorage)
 var lastUserContainer = document.querySelector("#lastUser-Container");
-var userInfo = document.querySelector("#userInfo");
-var initials = document.querySelector(".initials");
-var score = document.querySelector(".score");
-var lastUser = document.querySelector("#lastUser");
 var saveDiv = document.querySelector(".save-div");
 var saveBtn = document.querySelector("#save");
-var lastRegistered = document.querySelector(".lastRegistered");
+//var userInfo = document.querySelector("#userInfo");
+//var initials = document.querySelector(".initials");
+//var score = document.querySelector(".score");
+//var lastUser = document.querySelector("#lastUser");
+
+//var lastRegistered = document.querySelector(".lastRegistered");
 
 // Variables
-var seconds = 60;
+var seconds = 3;
 var questionIndex = 0;
 var correct = 0;
 var wrong = 0;
@@ -100,7 +101,7 @@ function setTime() {
   var timerInterval = setInterval(function () {
     seconds--;
     timeEl.textContent = seconds + " seconds left";
-    if (seconds === -1) {
+    if (seconds === -1 || questionIndex > 5) {
       clearInterval(timerInterval);
       highScores();
     }
@@ -122,7 +123,8 @@ function showNextQuestion() {
 
   // Create a loop and li element to hold each of the choices,
   // the li element is a child of choiceListTag.
-  for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) { // loop for choices only
+  for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
+    // loop for choices only
     var choiceTag = document.createElement("li");
     choiceListTag.appendChild(choiceTag);
 
@@ -169,20 +171,11 @@ function displayMessage(type, message) {
 }
 
 function renderLastUser() {
-  var userInitials = localStorage.getItem("userInitials");
-  //need to do one for the score
-
-  if (!userInitials) {
-    return "";
+  var storage = JSON.parse(localStorage.getItem("last-user-score"));
+  for (var i = 0; i < storage.length; i++){
+    console.log(storage[i]);
+    document.getElementById("lastUserScore").textContent = storage[i];
   }
-
-  var lastUserEl = document.createElement("h2");
-  lastRegistered.appendChild(lastUserEl);
-  lastRegistered.textContent = "Last User Registered";
-
-  var lastUser = document.createElement("h3");
-  lastRegistered.appendChild(lastUser);
-  lastUser.textContent = userInitials;
 }
 
 function highScores() {
@@ -196,9 +189,8 @@ function highScores() {
 
 saveBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  // console.log(event.target)
+
   var userInitials = document.querySelector(".initials").value;
-  //var userScore =
 
   if (userInitials === "") {
     displayMessage("Error", "Please, enter your initials");
@@ -206,10 +198,11 @@ saveBtn.addEventListener("click", function (event) {
     displayMessage("Success", "Initials saved!");
   }
 
-  var userScore = userInitials + " " + correct + "/6"
+  var userScore = userInitials + " " + correct + "/6";
   var storage = JSON.parse(localStorage.getItem("highScores"));
-  storage.push(userScore)
+  storage.push(userScore);
   localStorage.setItem("highScores", JSON.stringify(storage));
+  // document.getElementById("highestScores").textContent = "cool";
   renderLastUser();
 });
 

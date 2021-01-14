@@ -26,8 +26,7 @@
 
     <!-- --------- Render Last User Container Code -------- -->
     <div id="lastUser-Container" class="hide">
-      <h1>Highest Scores</h1>
-      <h2 id="yourScore">Your Score</h2>
+      <h1 id="yourScore">Your Score</h1>
       <input
         typer="text"
         name="initials"
@@ -35,13 +34,18 @@
         placeholder="Type your initials here"
       />
 
-      <div id="lastUser"></div>
+      <!-- <div id="lastUser"></div> -->
 
-      <div class="save-div">
+      <div>
+        <div class="save-div"></div>
         <button id="save" placeholder="save">Save</button>
       </div>
 
-      <div class="lastRegistered"></div>
+      <!-- <div class="lastRegistered"></div> -->
+      <h2>Last User Score</h2>
+      <ul>
+        <li id="lastUserScore"></li>
+      </ul>
     </div>
 
     <script src="script.js"></script>
