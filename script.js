@@ -9,12 +9,6 @@ var container = document.querySelector(".container");
 var lastUserContainer = document.querySelector("#lastUser-Container");
 var saveDiv = document.querySelector(".save-div");
 var saveBtn = document.querySelector("#save");
-//var userInfo = document.querySelector("#userInfo");
-//var initials = document.querySelector(".initials");
-//var score = document.querySelector(".score");
-//var lastUser = document.querySelector("#lastUser");
-
-//var lastRegistered = document.querySelector(".lastRegistered");
 
 // Variables
 var seconds = 3;
@@ -164,7 +158,6 @@ function showNextQuestion() {
 
 // WHEN the seconds is equal to zero, the renderLastUser function will execute.
 // The user will enter their initials and click Save.
-
 function displayMessage(type, message) {
   saveDiv.textContent = message;
   saveDiv.setAttribute("class", type);
@@ -172,7 +165,7 @@ function displayMessage(type, message) {
 
 function renderLastUser() {
   var storage = JSON.parse(localStorage.getItem("last-user-score"));
-  for (var i = 0; i < storage.length; i++){
+  for (var i = 0; i < storage.length; i++) {
     console.log(storage[i]);
     document.getElementById("lastUserScore").textContent = storage[i];
   }
@@ -195,19 +188,23 @@ saveBtn.addEventListener("click", function (event) {
   if (userInitials === "") {
     displayMessage("Error", "Please, enter your initials");
   } else {
-    displayMessage("Success", "Initials saved!");
-  }
+    displayMessage("Success", "Score saved!");
 
-  var userScore = userInitials + " " + correct + "/6";
-  var storage = JSON.parse(localStorage.getItem("highScores"));
-  storage.push(userScore);
-  localStorage.setItem("highScores", JSON.stringify(storage));
-  // document.getElementById("highestScores").textContent = "cool";
-  renderLastUser();
+    var userScore = userInitials + " " + correct + "/6";
+    var storage = JSON.parse(localStorage.getItem("last-user-score"));
+    storage.push(userScore);
+    localStorage.setItem("last-user-score", JSON.stringify(storage));
+
+    renderLastUser();
+  }
 });
 
 startButton.addEventListener("click", startQuiz);
+document.getElementById("play-again").addEventListener("click", function(event){
+  console.log(event.target);
+  location.reload();
+});
 
-if (localStorage.getItem("highScores") === null) {
-  localStorage.setItem("highScores", JSON.stringify([]));
+if (localStorage.getItem("last-user-score") === null) {
+  localStorage.setItem("last-user-score", JSON.stringify([]));
 }
