@@ -5,12 +5,11 @@ var correctAnswer = document.querySelector(".correctAnswer");
 var wrongAnswer = document.querySelector(".wrongAnswer");
 var container = document.querySelector(".container");
 
-// Grab elements for renderring last user (localStorage)
+// Grab elements for renderring last user from localStorage
 var lastUserContainer = document.querySelector("#lastUser-Container");
 var saveDiv = document.querySelector(".save-div");
 var saveBtn = document.querySelector("#save");
 
-// Variables
 var seconds = 60;
 var questionIndex = 0;
 var correct = 0;
@@ -124,14 +123,14 @@ function showNextQuestion() {
     var button = document.createElement("button");
     choiceTag.appendChild(button);
     choiceTag.style.width = "fit-content";
-    button.textContent = myQuestions[questionIndex].choices[i]; // this displays the four choices for each question
+    button.textContent = myQuestions[questionIndex].choices[i]; // displays the four choices for each question
 
     // Set a data-index attribute for each of the four choices and save it to a variable.
     button.setAttribute("data-index", i);
     var index = parseInt(button.getAttribute("data-index"));
 
-    // IF the use clicks on one of the four choices
-    // then the browser will display "Correct" if the correct choice is clicked on
+    // IF the user clicks on one of the four choices
+    // then an alert will display "Correct" if the correct choice is clicked on
     // Or "Wrong" if any of the other choices are clicked on.
     // Add 1 to the count of correct or wrong variables.
     // In either scenario, the showNextQuestion function will execute.
