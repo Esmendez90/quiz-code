@@ -11,7 +11,7 @@ var saveDiv = document.querySelector(".save-div");
 var saveBtn = document.querySelector("#save");
 
 // Variables
-var seconds = 3;
+var seconds = 60;
 var questionIndex = 0;
 var correct = 0;
 var wrong = 0;
@@ -88,9 +88,9 @@ function startQuiz() {
 
 // The timer will start decrementing from a set value of 60
 // at a speed of 1 second (1000 ms.).
-// When the seconds equals to zero the timer will stop.
+// When the seconds equals to zero or the user has completed answeing all questions, the timer will stop.
 // The timer, question, and four choices will hide.
-// The renderLastUser function will execute.
+// The highScores function will execute.
 function setTime() {
   var timerInterval = setInterval(function () {
     seconds--;
@@ -118,15 +118,15 @@ function showNextQuestion() {
   // Create a loop and li element to hold each of the choices,
   // the li element is a child of choiceListTag.
   for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
-    // loop for choices only
     var choiceTag = document.createElement("li");
     choiceListTag.appendChild(choiceTag);
 
     var button = document.createElement("button");
     choiceTag.appendChild(button);
     choiceTag.style.width = "fit-content";
-    button.textContent = myQuestions[questionIndex].choices[i]; // this displays the choices
+    button.textContent = myQuestions[questionIndex].choices[i]; // this displays the four choices for each question
 
+    // Set a data-index attribute for each of the four choices and save it to a variable.
     button.setAttribute("data-index", i);
     var index = parseInt(button.getAttribute("data-index"));
 
@@ -134,6 +134,7 @@ function showNextQuestion() {
     // then the browser will display "Correct" if the correct choice is clicked on
     // Or "Wrong" if any of the other choices are clicked on.
     // Add 1 to the count of correct or wrong variables.
+    // In either scenario, the showNextQuestion function will execute.
     if (index === myQuestions[questionIndex].answerIndex) {
       choiceListTag.addEventListener("click", function (event) {
         alert("Wrong Choice");
@@ -163,14 +164,6 @@ function displayMessage(type, message) {
   saveDiv.setAttribute("class", type);
 }
 
-function renderLastUser() {
-  var storage = JSON.parse(localStorage.getItem("last-user-score"));
-  for (var i = 0; i < storage.length; i++) {
-    console.log(storage[i]);
-    document.getElementById("lastUserScore").textContent = storage[i];
-  }
-}
-
 function highScores() {
   container.classList.add("hide");
   lastUserContainer.classList.remove("hide");
@@ -178,6 +171,15 @@ function highScores() {
   document.getElementById("yourScore").textContent =
     "Your Score is " + correct + "/6";
   //document.getElementById("yourScore").style.color = "white";
+}
+
+// The last user's initials and score will be displayed.
+function renderLastUser() {
+  var storage = JSON.parse(localStorage.getItem("last-user-score"));
+  for (var i = 0; i < storage.length; i++) {
+    console.log(storage[i]);
+    document.getElementById("lastUserScore").textContent = storage[i];
+  }
 }
 
 saveBtn.addEventListener("click", function (event) {
@@ -200,10 +202,12 @@ saveBtn.addEventListener("click", function (event) {
 });
 
 startButton.addEventListener("click", startQuiz);
-document.getElementById("play-again").addEventListener("click", function(event){
-  console.log(event.target);
-  location.reload();
-});
+document
+  .getElementById("play-again")
+  .addEventListener("click", function (event) {
+    console.log(event.target);
+    location.reload();
+  });
 
 if (localStorage.getItem("last-user-score") === null) {
   localStorage.setItem("last-user-score", JSON.stringify([]));
