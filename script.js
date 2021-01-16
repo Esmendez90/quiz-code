@@ -12,7 +12,6 @@ var seconds = 60;
 var questionIndex = 0;
 var wrong = false;
 var correct = 0;
-//var wrong = 0;
 var quizContainer = document.querySelector("#quizContainer");
 var myQuestions = [
   {
@@ -94,78 +93,72 @@ function setTime() {
     seconds--;
     timeEl.textContent = "You have " + seconds + " seconds left";
     if (seconds === -1 || questionIndex > 5) {
-      
       clearInterval(timerInterval);
       highScores();
     }
-    if (wrong === true){
+    if (wrong === true) {
       seconds = seconds - 10;
       wrong = false;
       return seconds;
-      
     }
-    
   }, 1000);
 }
 
 function showNextQuestion() {
-  
-  if(questionIndex <= 5){
-  quizContainer.textContent = "";
+  if (questionIndex <= 5) {
+    quizContainer.textContent = "";
 
-  // Create an h1 element that is a child of the containerTag
-  // and will hold the questions from the array of questions.
-  var questionTag = document.createElement("h1");
-  quizContainer.appendChild(questionTag);
-  questionTag.textContent = myQuestions[questionIndex].question; // this displays the question on page
+    // Create an h1 element that is a child of the containerTag
+    // and will hold the questions from the array of questions.
+    var questionTag = document.createElement("h1");
+    quizContainer.appendChild(questionTag);
+    questionTag.textContent = myQuestions[questionIndex].question; // this displays the question on page
 
-  // Create a ul element that is a child of quizContainer
-  var choiceListTag = document.createElement("ul");
-  quizContainer.appendChild(choiceListTag);
+    // Create a ul element that is a child of quizContainer
+    var choiceListTag = document.createElement("ul");
+    quizContainer.appendChild(choiceListTag);
 
-  // Create a loop and li element to hold each of the choices,
-  // the li element is a child of choiceListTag.
-  for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
-    var choiceTag = document.createElement("li");
-    choiceListTag.appendChild(choiceTag);
+    // Create a loop and li element to hold each of the choices,
+    // the li element is a child of choiceListTag.
+    for (var i = 0; i < myQuestions[questionIndex].choices.length; i++) {
+      var choiceTag = document.createElement("li");
+      choiceListTag.appendChild(choiceTag);
 
-    var button = document.createElement("button");
-    choiceTag.appendChild(button);
-    choiceTag.style.width = "fit-content";
-    button.textContent = myQuestions[questionIndex].choices[i]; // displays the four choices for each question
+      var button = document.createElement("button");
+      choiceTag.appendChild(button);
+      choiceTag.style.width = "fit-content";
+      button.textContent = myQuestions[questionIndex].choices[i]; // displays the four choices for each question
 
-    // Set a data-index attribute for each of the four choices and save it to a variable.
-    button.setAttribute("data-index", i);
-    var index = parseInt(button.getAttribute("data-index"));
+      // Set a data-index attribute for each of the four choices and save it to a variable.
+      button.setAttribute("data-index", i);
+      var index = parseInt(button.getAttribute("data-index"));
 
-    // IF the user clicks on one of the four choices
-    // then an alert will display "Correct" if the correct choice is clicked on
-    // Or "Wrong" if any of the other choices are clicked on.
-    // Add 1 to the count of correct or wrong variables.
-    // In either scenario, the showNextQuestion function will execute.
-    if (index === myQuestions[questionIndex].answerIndex) {
-      choiceListTag.addEventListener("click", function (event) {
-        document.getElementById("alert-msg").textContent = "WRONG!!!";
-        event.stopPropagation();
-        //wrong++;
-        wrong = true;
-        
-        
-        questionIndex++;
-        showNextQuestion();
-      });
+      // IF the user clicks on one of the four choices
+      // then an alert will display "Correct" if the correct choice is clicked on
+      // Or "Wrong" if any of the other choices are clicked on.
+      // Add 1 to the count of correct or wrong variables.
+      // In either scenario, the showNextQuestion function will execute.
+      if (index === myQuestions[questionIndex].answerIndex) {
+        choiceListTag.addEventListener("click", function (event) {
+          document.getElementById("alert-msg").textContent = "WRONG!!!";
+          event.stopPropagation();
+          //wrong++;
+          wrong = true;
 
-      button.addEventListener("click", function (event) {
-        document.getElementById("alert-msg").textContent = "CORRECT!!!";
-        event.stopPropagation();
-        correct++;
-        questionIndex++;
-        showNextQuestion();
-      });
+          questionIndex++;
+          showNextQuestion();
+        });
+
+        button.addEventListener("click", function (event) {
+          document.getElementById("alert-msg").textContent = "CORRECT!!!";
+          event.stopPropagation();
+          correct++;
+          questionIndex++;
+          showNextQuestion();
+        });
+      }
     }
   }
-  console.log(questionIndex);
-}
 }
 
 // WHEN the seconds is equal to zero, the renderLastUser function will execute.
