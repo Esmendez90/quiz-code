@@ -39,13 +39,13 @@ This timed coding quiz will have:
 
 ## Screenshots
 
-<img src="images/start-button.png" alt="Start Button" width="90%" height="85%">
-<img src="images/question-choices.png" alt="Quiz" width="90%" height="85%">
-<img src="images/scoreboard.png" alt="Scoreboard" width="90%" height="85%">
+<img src="images/start-button.png" alt="Start Button" width="80%" height="75%">
+<img src="images/question-choices.png" alt="Quiz" width="80%" height="75%">
+<img src="images/scoreboard.png" alt="Scoreboard" width="80%" height="75%">
 
 ## Link to Page
 
-<https://esmendez90.github.io/password-generator/>
+<https://esmendez90.github.io/quiz-code/>
 
 ## Tools
 
