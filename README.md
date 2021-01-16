@@ -27,14 +27,14 @@ It will have a clean, polished, and responsive user interface.
 
 This timed coding quiz will have:
 
-* A start button that will start the quiz.
+* A start button that to begin the quiz.
 * A countdown timer.
-* A question with four multiple-choice questions that will be displayed on the page after as soon as the timer begins the countdown.
+* A question with four multiple-choice questions that will be displayed on the page as soon as the timer begins the countdown.
 * A message that will let the user know if the answer they chose is correct or incorrect.
 * Another question will follow after answering the previous question.
-* A scoreboard that will be displayed when the timer reaches 0 or when all the questions are answered.
+* A scoreboard will be displayed when the timer reaches zero or when all the questions are answered.
 * The user will save their initials.
-* The last user score should be displayed.
+* The last user score must display.
 * A button to play again.
 
 ## Screenshots
