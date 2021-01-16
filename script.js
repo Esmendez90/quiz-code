@@ -10,8 +10,9 @@ var saveBtn = document.querySelector("#save");
 
 var seconds = 60;
 var questionIndex = 0;
+var wrong = false;
 var correct = 0;
-var wrong = 0;
+//var wrong = 0;
 var quizContainer = document.querySelector("#quizContainer");
 var myQuestions = [
   {
@@ -93,13 +94,23 @@ function setTime() {
     seconds--;
     timeEl.textContent = "You have " + seconds + " seconds left";
     if (seconds === -1 || questionIndex > 5) {
+      
       clearInterval(timerInterval);
       highScores();
     }
+    if (wrong === true){
+      seconds = seconds - 10;
+      wrong = false;
+      return seconds;
+      
+    }
+    
   }, 1000);
 }
 
 function showNextQuestion() {
+  
+  if(questionIndex <= 5){
   quizContainer.textContent = "";
 
   // Create an h1 element that is a child of the containerTag
@@ -136,7 +147,10 @@ function showNextQuestion() {
       choiceListTag.addEventListener("click", function (event) {
         document.getElementById("alert-msg").textContent = "WRONG!!!";
         event.stopPropagation();
-        wrong++;
+        //wrong++;
+        wrong = true;
+        
+        
         questionIndex++;
         showNextQuestion();
       });
@@ -150,6 +164,8 @@ function showNextQuestion() {
       });
     }
   }
+  console.log(questionIndex);
+}
 }
 
 // WHEN the seconds is equal to zero, the renderLastUser function will execute.
