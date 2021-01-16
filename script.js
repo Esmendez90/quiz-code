@@ -1,8 +1,6 @@
 // Grab elements from html page
 var startButton = document.getElementById("start-btn");
 var timeEl = document.querySelector(".timer");
-var correctAnswer = document.querySelector(".correctAnswer");
-var wrongAnswer = document.querySelector(".wrongAnswer");
 var container = document.querySelector(".container");
 
 // Grab elements for renderring last user from localStorage
@@ -93,7 +91,7 @@ function startQuiz() {
 function setTime() {
   var timerInterval = setInterval(function () {
     seconds--;
-    timeEl.textContent = seconds + " seconds left";
+    timeEl.textContent = "You have " + seconds + " seconds left";
     if (seconds === -1 || questionIndex > 5) {
       clearInterval(timerInterval);
       highScores();
@@ -136,19 +134,17 @@ function showNextQuestion() {
     // In either scenario, the showNextQuestion function will execute.
     if (index === myQuestions[questionIndex].answerIndex) {
       choiceListTag.addEventListener("click", function (event) {
-        alert("Wrong Choice");
+        document.getElementById("alert-msg").textContent = "WRONG!!!";
         event.stopPropagation();
         wrong++;
-        wrongAnswer.textContent = "Wrong answers = " + wrong;
         questionIndex++;
         showNextQuestion();
       });
 
       button.addEventListener("click", function (event) {
-        alert("Correct Choice");
+        document.getElementById("alert-msg").textContent = "CORRECT!!!";
         event.stopPropagation();
         correct++;
-        correctAnswer.textContent = "Correct answers = " + correct;
         questionIndex++;
         showNextQuestion();
       });
@@ -169,7 +165,6 @@ function highScores() {
   renderLastUser();
   document.getElementById("yourScore").textContent =
     "Your Score is " + correct + "/6";
-  //document.getElementById("yourScore").style.color = "white";
 }
 
 // The last user's initials and score will be displayed.
@@ -187,9 +182,9 @@ saveBtn.addEventListener("click", function (event) {
   var userInitials = document.querySelector(".initials").value;
 
   if (userInitials === "") {
-    displayMessage("Error", "Please, enter your initials");
+    displayMessage("error", "Please, enter your initials");
   } else {
-    displayMessage("Success", "Score saved!");
+    displayMessage("success", "Score saved!");
 
     var userScore = userInitials + " " + correct + "/6";
     var storage = JSON.parse(localStorage.getItem("last-user-score"));
