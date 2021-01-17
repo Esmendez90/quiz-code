@@ -92,14 +92,15 @@ function setTime() {
   var timerInterval = setInterval(function () {
     seconds--;
     timeEl.textContent = "You have " + seconds + " seconds left";
-    if (seconds === -1 || questionIndex > 5) {
-      clearInterval(timerInterval);
-      highScores();
-    }
+
     if (wrong === true) {
       seconds = seconds - 10;
       wrong = false;
       return seconds;
+    }
+    if (seconds <= 0 || questionIndex > 5) {
+      clearInterval(timerInterval);
+      highScores();
     }
   }, 1000);
 }
