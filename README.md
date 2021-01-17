@@ -31,6 +31,7 @@ This timed coding quiz will have:
 * A countdown timer.
 * A question with four multiple-choice questions that will be displayed on the page as soon as the timer begins the countdown.
 * A message that will let the user know if the answer they chose is correct or incorrect.
+* A 10 second decrement in the timer if the user clicks on a wrong choice.
 * Another question will follow after answering the previous question.
 * A scoreboard will be displayed when the timer reaches zero or when all the questions are answered.
 * The user will save their initials.
