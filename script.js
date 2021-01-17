@@ -142,9 +142,7 @@ function showNextQuestion() {
         choiceListTag.addEventListener("click", function (event) {
           document.getElementById("alert-msg").textContent = "WRONG!!!";
           event.stopPropagation();
-          //wrong++;
           wrong = true;
-
           questionIndex++;
           showNextQuestion();
         });
